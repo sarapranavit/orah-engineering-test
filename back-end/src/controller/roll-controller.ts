@@ -19,7 +19,7 @@ export class RollController {
 
     const createRollInput: CreateRollInput = {
       name: params.name,
-      completed_at: params.completed_at,
+      completed_at: new Date(params.completed_at),
     }
     const roll = new Roll()
     roll.prepareToCreate(createRollInput)
