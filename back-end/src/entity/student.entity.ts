@@ -16,7 +16,7 @@ export class Student {
   photo_url: string
 
   public prepareToCreate(input: CreateStudentInput) {
-    this.first_name = input.last_name
+    this.first_name = input.first_name
     this.last_name = input.last_name
     this.photo_url = input.photo_url
   }
