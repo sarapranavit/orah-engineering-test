@@ -10,6 +10,11 @@ export class StudentController {
     return this.studentRepository.find()
   }
 
+  async getStudent(request: Request, response: Response, next: NextFunction) {
+    const studentId = request.params.id;
+    return this.studentRepository.findOne(studentId)
+  }
+
   async createStudent(request: Request, response: Response, next: NextFunction) {
     const { body: params } = request
 
