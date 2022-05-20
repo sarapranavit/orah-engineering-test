@@ -40,13 +40,12 @@ export class StudentController {
         photo_url: params.photo_url,
       }
       student.prepareToUpdate(updateStudentInput)
-
       return this.studentRepository.save(student)
     })
   }
 
   async removeStudent(request: Request, response: Response, next: NextFunction) {
     let studentToRemove = await this.studentRepository.findOne(request.params.id)
-    await this.studentRepository.remove(studentToRemove)
+    return await this.studentRepository.remove(studentToRemove)
   }
 }
