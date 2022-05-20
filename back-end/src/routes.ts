@@ -58,7 +58,7 @@ export const Routes = [
   },
   {
     method: "delete",
-    route: "/roll/delete",
+    route: "/roll/:id",
     controller: RollController,
     action: "removeRoll",
   },
