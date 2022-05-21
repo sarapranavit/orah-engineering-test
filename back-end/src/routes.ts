@@ -95,6 +95,11 @@ export const Routes = [
     route: "/group/get-all",
     controller: GroupController,
     action: "allGroups"
-  }
-
+  },
+  {
+    method: "put",
+    route: "/group/update",
+    controller: GroupController,
+    action: "updateGroup"
+  },
 ]

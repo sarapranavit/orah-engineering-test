@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express"
 import { getRepository } from "typeorm"
 import { Group } from "../entity/group.entity"
-import { CreateGroupInput } from "../interface/group.interface"
+import { CreateGroupInput, UpdateGroupInput } from "../interface/group.interface"
 
 export class GroupController {
   private groupRepository = getRepository(Group)
@@ -13,7 +13,7 @@ export class GroupController {
   async createGroup(request: Request, response: Response, next: NextFunction) {
     // Task 1: 
     // Add a Group
-    
+
     const { body: params } = request
     const createGroupInput: CreateGroupInput ={
       name: params.name,
@@ -29,9 +29,24 @@ export class GroupController {
   }
 
   async updateGroup(request: Request, response: Response, next: NextFunction) {
-    // Task 1: 
-    
-    // Update a Group
+    const { body: params } = request
+
+    const updateGroupInput: UpdateGroupInput ={
+      id: params.id,
+      name: params.name,
+      number_of_weeks: params.number_of_weeks,
+      roll_states: params.roll_states,
+      incidents: params.incidents,
+      ltmt: params.ltmt
+    }
+    const result = await this.groupRepository.findOne(params.id);
+    if(result) {
+      result.prepareToCreate(updateGroupInput)
+      return this.groupRepository.save(result)
+    }
+    else {
+      return "No groups Found"
+    }
   }
 
   async removeGroup(request: Request, response: Response, next: NextFunction) {
