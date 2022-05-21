@@ -7,9 +7,7 @@ export class GroupController {
   private groupRepository = getRepository(Group)
 
   async allGroups(request: Request, response: Response, next: NextFunction) {
-    // Task 1: 
-    
-    // Return the list of all groups
+    return this.groupRepository.find()
   }
 
   async createGroup(request: Request, response: Response, next: NextFunction) {
