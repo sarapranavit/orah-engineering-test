@@ -68,7 +68,6 @@ export class RollController {
 
   async addStudentRollState(request: Request, response: Response, next: NextFunction) {
     const { body: params } = request
-
     const createStudentRollStateInput: CreateStudentRollStateInput = {
       roll_id: params.roll_id,
       student_id: params.student_id,

@@ -40,7 +40,7 @@ export const Routes = [
   },
   {
     method: "get",
-    route: "/roll/get-by-id",
+    route: "/roll/:id",
     controller: RollController,
     action: "getRoll",
   },
@@ -79,5 +79,6 @@ export const Routes = [
     route: "/roll/update-student-roll-state",
     controller: RollController,
     action: "updateStudentRollState",
-  }
+  }  
+
 ]
