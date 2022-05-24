@@ -50,9 +50,8 @@ export class GroupController {
   }
 
   async removeGroup(request: Request, response: Response, next: NextFunction) {
-    // Task 1: 
-    
-    // Delete a Group
+    let groupToRemove = await this.groupRepository.findOne(request.params.id)
+    return await this.groupRepository.remove(groupToRemove)
   }
 
   async getGroupStudents(request: Request, response: Response, next: NextFunction) {
