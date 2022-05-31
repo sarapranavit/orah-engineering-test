@@ -116,7 +116,7 @@ export const Routes = [
   },
   {
     method: "get",
-    route: "/group/get-students-in-group",
+    route: "/group/get-students-in-group/:id",
     controller: GroupController,
     action: "getGroupStudents" 
   }

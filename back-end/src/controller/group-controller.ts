@@ -64,6 +64,8 @@ export class GroupController {
 
   async getGroupStudents(request: Request, response: Response, next: NextFunction) {
     // Task 1: 
+
+    const groupId = request.params.id
         
     // Return the list of Students that are in a Group
     const getGroupStudents = await this.studentRepository
@@ -78,7 +80,7 @@ export class GroupController {
                               .getQuery();
                               return "student.id IN" + subQuery;
                             })
-                            .setParameter("groupId", 1)
+                            .setParameter("groupId", groupId)
                             .getRawMany();
 
     return getGroupStudents
@@ -153,7 +155,8 @@ export class GroupController {
   }
 
   async getRollFilterList(noOfDays){
-    const rollFilter = await this.rollRepository
+    try {
+      const rollFilter = await this.rollRepository
       .createQueryBuilder('roll')
       .select("id")
       .where(`completed_at BETWEEN date('now', '-${noOfDays} days') AND date('now')`)
@@ -165,22 +168,34 @@ export class GroupController {
       }
 
       return rollList
+    }
+    catch(error) {
+      throw error
+    }
+    
   }
 
   async getStudentGroupsList(rollList, roll_states, ltmt, incidents){
-    const roll_states_arr = roll_states.split(',')
-    const query = this.studentRollStateRepository
-    .createQueryBuilder("student_roll_state")
-    .select("student_id")
-    .addSelect("count(student_id)", "incident_count")
-    .where("roll_id IN (:...ids)", {ids: rollList})
-    .andWhere("state IN (:...states)", {states: roll_states_arr})
-    .groupBy("student_id")
-    if(ltmt && incidents){
-      query.having(`count(student_id) ${ltmt} ${incidents}`)
+    try {
+      const roll_states_arr = roll_states.split(',')
+      console.log("roll_states_arr", roll_states_arr);
+      const query = this.studentRollStateRepository
+      .createQueryBuilder("student_roll_state")
+      .select("student_id")
+      .addSelect("count(student_id)", "incident_count")
+      .where("roll_id IN (:...ids)", {ids: rollList})
+      .andWhere("state IN (:...states)", {states: roll_states_arr})
+      .groupBy("student_id")
+      if(ltmt && incidents){
+        query.having(`count(student_id) ${ltmt} ${incidents}`)
+      }
+      const result = await query.getRawMany()
+      return result
     }
-    const result = await query.getRawMany()
-    return result
+    catch(error) {
+      throw error
+    }
+   
   }
 
   async updateStudentGroupCount(groupCount, groupId) {
