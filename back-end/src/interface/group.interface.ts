@@ -12,5 +12,7 @@ export interface UpdateGroupInput {
     number_of_weeks: number,
     roll_states: string,
     incidents: number,
-    ltmt: string
+    ltmt: string,
+    run_at?: Date,
+    student_count?: number
 }
